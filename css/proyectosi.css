@@ -1,0 +1,170 @@
+/* 1. CONTENEDOR PRINCIPAL: Controla los márgenes para que no toquen el borde */
+
+.ap-portfolio {
+    background-color: #000;
+    /* Fondo Negro Puro */
+    padding: 100px 0;
+}
+
+.ap-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+
+/* 2. LA GRILLA BENTO: Aquí se define el tamaño base */
+
+.ap-bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 4 columnas fijas */
+    grid-auto-rows: 300px;
+    /* Altura base de cada cuadro */
+    gap: 24px;
+    width: 100%;
+}
+
+
+/* 3. LAS TARJETAS (ESTILO APPLE) */
+
+.ap-item {
+    position: relative;
+    border-radius: 32px;
+    overflow: hidden;
+    background: #111;
+    text-decoration: none;
+    cursor: pointer;
+    /* Borde sutil para que se vea en fondo negro */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    will-change: transform;
+    /* Optimización de rendimiento */
+}
+
+.ap-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.6s ease;
+}
+
+
+/* --- CONTROL DE TAMAÑOS ESPECÍFICOS --- */
+
+
+/* Usa estas clases en tu HTML para que unos pesen más que otros */
+
+.ap-item.big {
+    grid-column: span 2;
+    grid-row: span 2;
+    /* El más grande: 5temporada */
+}
+
+.ap-item.wide {
+    grid-column: span 2;
+    /* Ancho: Spider-man */
+}
+
+.ap-item.tall {
+    grid-row: span 2;
+    /* Alto: Zapatería o similar */
+}
+
+
+/* --- INTERACCIONES (HOVER) --- */
+
+.ap-item:hover .ap-bg-img {
+    transform: scale(1.05);
+    filter: blur(8px) brightness(0.5);
+}
+
+.ap-overlay {
+    position: absolute;
+    inset: 0;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 70%);
+    transition: background 0.5s ease;
+}
+
+.ap-details {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.ap-item:hover .ap-details {
+    max-height: 200px;
+    opacity: 1;
+    margin-top: 15px;
+}
+
+
+/* --- SPECS INTERNAS --- */
+
+.ap-specs {
+    display: flex;
+    gap: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 15px;
+    margin-bottom: 15px;
+}
+
+.spec-item span {
+    font-size: 10px;
+    color: #86868b;
+    text-transform: uppercase;
+}
+
+.spec-item p {
+    font-size: 13px;
+    color: #fff;
+    margin: 0;
+}
+
+.ap-btn-glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+
+/* --- RESPONSIVE CORREGIDO --- */
+
+@media (max-width: 1024px) {
+    .ap-bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .ap-container {
+        padding: 0 20px;
+    }
+    .ap-bento-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 350px;
+        /* Altura cómoda en celular */
+    }
+    .ap-item.big,
+    .ap-item.wide,
+    .ap-item.tall {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+    /* Mostrar info en móvil por defecto */
+    .ap-details {
+        opacity: 1;
+        max-height: 200px;
+    }
+    .ap-bg-img {
+        filter: brightness(0.6);
+    }
+}
